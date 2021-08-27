@@ -51,17 +51,22 @@ public void OnPluginStart()
 #endif
 
 #if defined _PlayerManager_included
-	AddMultiTargetFilter("@steam", Filter_Steam, "Steam Players", false);
-	AddMultiTargetFilter("@nosteam", Filter_NoSteam, "No-Steam Players", false);
+	if (GetEngineVersion() != Engine_CSGO)
+	{
+		AddMultiTargetFilter("@steam", Filter_Steam, "Steam Players", false);
+		AddMultiTargetFilter("@nosteam", Filter_NoSteam, "No-Steam Players", false);
 
-	RegConsoleCmd("sm_steam", Command_Steam, "Currently online No-Steam players");
-	RegConsoleCmd("sm_nosteam", Command_NoSteam, "Currently online No-Steam players");
+		RegConsoleCmd("sm_steam", Command_Steam, "Currently online No-Steam players");
+		RegConsoleCmd("sm_nosteam", Command_NoSteam, "Currently online No-Steam players");
+	}
 #endif
 
 	RegConsoleCmd("sm_admins", Command_Admins, "Currently online admins.");
 	RegConsoleCmd("sm_friends", Command_Friends, "Currently online friends.");
 	RegConsoleCmd("sm_vips", Command_VIPs, "Currently online vips.");
+#if defined _zr_included
 	RegConsoleCmd("sm_mzombies", Command_MotherZombies, "Currently online mother zombies.");
+#endif
 
 	if(g_bLateLoad)
 	{
@@ -99,8 +104,11 @@ public void OnPluginEnd()
 #endif
 
 #if defined _PlayerManager_included
-	RemoveMultiTargetFilter("@steam", Filter_Steam);
-	RemoveMultiTargetFilter("@nosteam", Filter_NoSteam);
+	if (GetEngineVersion() != Engine_CSGO)
+	{
+		RemoveMultiTargetFilter("@steam", Filter_Steam);
+		RemoveMultiTargetFilter("@nosteam", Filter_NoSteam);
+	}
 #endif
 }
 
@@ -304,6 +312,7 @@ public bool Filter_NoSteam(const char[] sPattern, Handle hClients)
 	return true;
 }
 
+#if defined _Voice_included
 public bool Filter_Talking(const char[] sPattern, Handle hClients, int client)
 {
 	for(int i = 1; i <= MaxClients; i++)
@@ -316,6 +325,7 @@ public bool Filter_Talking(const char[] sPattern, Handle hClients, int client)
 
 	return true;
 }
+#endif
 
 public bool Filter_Admin(const char[] sPattern, Handle hClients, int client)
 {
