@@ -139,10 +139,10 @@ public Action Command_Admins(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		ReplyToCommand(client, "[SM] Admins currently online: \x0745DA4A%s", aBuf);
+		CReplyToCommand(client, "[SM] Admins currently online: {green}%s", aBuf);
 	}
 	else
-		ReplyToCommand(client, "[SM] Admins currently online: \x07FF4040none");
+		CReplyToCommand(client, "[SM] Admins currently online: {green}none");
 
 	return Plugin_Handled;
 }
@@ -164,10 +164,10 @@ public Action Command_VIPs(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		ReplyToCommand(client, "[SM] VIPs currently online: \x07D147FF%s", aBuf);
+		CReplyToCommand(client, "[SM] VIPs currently online: {pink}%s", aBuf);
 	}
 	else
-		ReplyToCommand(client, "[SM] VIPs currently online: \x07FF4040none");
+		CReplyToCommand(client, "[SM] VIPs currently online: {pink}none");
 
 	return Plugin_Handled;
 }
@@ -189,10 +189,10 @@ public Action Command_MotherZombies(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		ReplyToCommand(client, "[SM] Mother Zombies currently alive: \x07D147FF%s", aBuf);
+		CReplyToCommand(client, "[SM] Mother Zombies currently alive: {darkred}%s", aBuf);
 	}
 	else
-		ReplyToCommand(client, "[SM] Mother Zombies currently alive: \x07FF4040none");
+		CReplyToCommand(client, "[SM] Mother Zombies currently alive: {pink}none");
 
 	return Plugin_Handled;
 }
@@ -228,10 +228,10 @@ public Action Command_Friends(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		PrintToChat(client, "[SM] Friends currently online: \x07CBC7FF%s", aBuf);
+		PrintToChat(client, "[SM] Friends currently online: {lightblue}%s", aBuf);
 	}
 	else
-		PrintToChat(client, "[SM] Friends currently online: \x07FF4040none");
+		PrintToChat(client, "[SM] Friends currently online: {pink}none");
 
 	return Plugin_Handled;
 }
@@ -254,10 +254,10 @@ public Action Command_Steam(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		ReplyToCommand(client, "[SM] Steam clients online: \x07CBC7FF%s", aBuf);
+		CReplyToCommand(client, "[SM] Steam clients online: {lightblue}%s", aBuf);
 	}
 	else
-		ReplyToCommand(client, "[SM] Steam clients online: \x07FF4040none");
+		CReplyToCommand(client, "[SM] Steam clients online: {pink}none");
 
 	return Plugin_Handled;
 }
@@ -280,10 +280,10 @@ public Action Command_NoSteam(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		ReplyToCommand(client, "[SM] No-Steam clients online: \x07CBC7FF%s", aBuf);
+		CReplyToCommand(client, "[SM] No-Steam clients online: {lightblue}%s", aBuf);
 	}
 	else
-		ReplyToCommand(client, "[SM] No-Steam clients online: \x07FF4040none");
+		CReplyToCommand(client, "[SM] No-Steam clients online: {pink}none");
 
 	return Plugin_Handled;
 }
