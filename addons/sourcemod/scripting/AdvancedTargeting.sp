@@ -4,7 +4,7 @@
 
 #include <sourcemod>
 #include <sdktools>
-#include <SteamWorks>
+#include <ripext>
 #include <cstrike>
 #include <AdvancedTargeting>
 #include <multicolors>
@@ -537,22 +537,17 @@ public void OnClientAuthorized(int client, const char[] auth)
 		return;
 
 	char sSteam64ID[32];
-	Steam32IDtoSteam64ID(auth, sSteam64ID, sizeof(sSteam64ID));
+	GetClientAuthId(client, AuthId_SteamID64, sSteam64ID, sizeof(sSteam64ID));
 
 	char sSteamAPIKey[64];
 	GetSteamAPIKey(sSteamAPIKey, sizeof(sSteamAPIKey));
 
 	static char sRequest[256];
-	FormatEx(sRequest, sizeof(sRequest), "http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=%s&steamid=%s&relationship=friend&format=vdf", sSteamAPIKey, sSteam64ID);
+	FormatEx(sRequest, sizeof(sRequest), "http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=%s&steamid=%s&relationship=friend&format=json", sSteamAPIKey, sSteam64ID);
 
-	Handle hRequest = SteamWorks_CreateHTTPRequest(k_EHTTPMethodGET, sRequest);
-	if (!hRequest ||
-		!SteamWorks_SetHTTPRequestContextValue(hRequest, client) ||
-		!SteamWorks_SetHTTPCallbacks(hRequest, OnTransferComplete) ||
-		!SteamWorks_SendHTTPRequest(hRequest))
-	{
-		CloseHandle(hRequest);
-	}
+	HTTPRequest request = new HTTPRequest(sRequest);
+
+	request.Get(OnFriendsReceived, client);
 }
 
 public void OnClientDisconnect(int client)
@@ -563,52 +558,29 @@ public void OnClientDisconnect(int client)
 	g_FriendsArray[client] = INVALID_HANDLE;
 }
 
-public int OnTransferComplete(Handle hRequest, bool bFailure, bool bRequestSuccessful, EHTTPStatusCode eStatusCode, int client)
+void OnFriendsReceived(HTTPResponse response, any client)
 {
-	if(bFailure || !bRequestSuccessful || eStatusCode != k_EHTTPStatusCode200OK)
-	{
-		// Private profile or maybe steam down?
-		//LogError("SteamAPI HTTP Response failed: %d", eStatusCode);
-		CloseHandle(hRequest);
+	if (response.Status != HTTPStatus_OK)
 		return;
-	}
 
-	int Length;
-	SteamWorks_GetHTTPResponseBodySize(hRequest, Length);
+	// Indicate that the response contains a JSON object
+	JSONObject responseData = view_as<JSONObject>(response.Data);
 
-	char[] sData = new char[Length];
-	SteamWorks_GetHTTPResponseBodyData(hRequest, sData, Length);
-	//SteamWorks_GetHTTPResponseBodyCallback(hRequest, APIWebResponse, client);
+	JSONObject friendslist = view_as<JSONObject>(responseData.Get("friendslist"));
 
-	CloseHandle(hRequest);
-
-	APIWebResponse(sData, client);
+	APIWebResponse(friendslist, client);
 }
 
-public void APIWebResponse(const char[] sData, int client)
+public void APIWebResponse(JSONObject friendslist, int client)
 {
-	KeyValues Response = new KeyValues("SteamAPIResponse");
-	if(!Response.ImportFromString(sData, "SteamAPIResponse"))
+	// No friends or private profile
+	if (!friendslist.Size)
 	{
-		LogError("ImportFromString(sData, \"SteamAPIResponse\") failed.");
-		delete Response;
+		delete friendslist;
 		return;
 	}
 
-	if(!Response.JumpToKey("friends"))
-	{
-		LogError("JumpToKey(\"friends\") failed.");
-		delete Response;
-		return;
-	}
-
-	// No friends?
-	if(!Response.GotoFirstSubKey())
-	{
-		//LogError("GotoFirstSubKey() failed.");
-		delete Response;
-		return;
-	}
+	JSONArray friends = view_as<JSONArray>(friendslist.Get("friends"));
 
 	if(g_FriendsArray[client] != INVALID_HANDLE)
 		CloseHandle(g_FriendsArray[client]);
@@ -616,15 +588,16 @@ public void APIWebResponse(const char[] sData, int client)
 	g_FriendsArray[client] = CreateArray();
 
 	char sCommunityID[32];
-	do
+	for (int i = 0; i < friends.Length; i++)
 	{
-		Response.GetString("steamid", sCommunityID, sizeof(sCommunityID));
-
+		JSONObject friend = view_as<JSONObject>(friends.Get(i));
+		friend.GetString("steamid", sCommunityID, sizeof(sCommunityID));
 		PushArrayCell(g_FriendsArray[client], Steam64toSteam3(sCommunityID));
+		delete friend;
 	}
-	while(Response.GotoNextKey());
 
-	delete Response;
+	delete friends;
+	delete friendslist;
 }
 
 public int Native_IsClientFriend(Handle plugin, int numParams)
