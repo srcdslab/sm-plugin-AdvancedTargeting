@@ -172,6 +172,7 @@ public Action Command_VIPs(int client, int args)
 	return Plugin_Handled;
 }
 
+#if defined _zr_included
 public Action Command_MotherZombies(int client, int args)
 {
 	char aBuf[1024];
@@ -196,6 +197,7 @@ public Action Command_MotherZombies(int client, int args)
 
 	return Plugin_Handled;
 }
+#endif
 
 public Action Command_Friends(int client, int args)
 {
@@ -353,6 +355,7 @@ public bool Filter_NotAdmin(const char[] sPattern, Handle hClients, int client)
 	return true;
 }
 
+#if defined _zr_included
 public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int client)
 {
 	for(int i = 1; i <= MaxClients; i++)
@@ -365,7 +368,9 @@ public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int clie
 
 	return true;
 }
+#endif
 
+#if defined _zr_included
 public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int client)
 {
 	for(int i = 1; i <= MaxClients; i++)
@@ -378,6 +383,7 @@ public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int c
 
 	return true;
 }
+#endif
 
 public bool Filter_VIP(const char[] sPattern, Handle hClients, int client)
 {
