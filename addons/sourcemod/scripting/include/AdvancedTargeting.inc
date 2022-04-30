@@ -18,7 +18,7 @@ public SharedPlugin __pl_AdvancedTargeting =
 };
 
 #if !defined REQUIRE_PLUGIN
-public __pl_AdvancedTargeting_SetNTVOptional()
+public void __pl_AdvancedTargeting_SetNTVOptional()
 {
 	MarkNativeAsOptional("IsClientFriend");
 	MarkNativeAsOptional("ReadClientFriends");
