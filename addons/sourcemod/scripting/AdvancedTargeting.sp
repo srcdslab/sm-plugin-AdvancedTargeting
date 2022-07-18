@@ -16,6 +16,7 @@
 #undef REQUIRE_EXTENSIONS
 #tryinclude <Voice>
 #define REQUIRE_EXTENSIONS
+#define TAG_COLOR "{green}[SM]{default}"
 
 #pragma newdecls required
 
@@ -25,9 +26,9 @@ bool g_bLateLoad = false;
 public Plugin myinfo =
 {
 	name = "Advanced Targeting Extended",
-	author = "BotoX, Obus, inGame, maxime1907",
+	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.3",
+	version = "1.4.0",
 	url = ""
 }
 
@@ -139,10 +140,10 @@ public Action Command_Admins(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "[SM] Admins currently online: {green}%s", aBuf);
+		CReplyToCommand(client, "%s Admins currently online : {green}%s{default}.", TAG_COLOR, aBuf);
 	}
 	else
-		CReplyToCommand(client, "[SM] Admins currently online: {green}none");
+		CReplyToCommand(client, "%s Admins currently online : {green}none{default}.", TAG_COLOR);
 
 	return Plugin_Handled;
 }
@@ -164,10 +165,10 @@ public Action Command_VIPs(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "[SM] VIPs currently online: {pink}%s", aBuf);
+		CReplyToCommand(client, "%s VIPs currently online : {orchid}%s{default}.", TAG_COLOR, aBuf);
 	}
 	else
-		CReplyToCommand(client, "[SM] VIPs currently online: {pink}none");
+		CReplyToCommand(client, "%s VIPs currently online : {orchid}none{default}.", TAG_COLOR);
 
 	return Plugin_Handled;
 }
@@ -190,10 +191,10 @@ public Action Command_MotherZombies(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "[SM] Mother Zombies currently alive: {darkred}%s", aBuf);
+		CReplyToCommand(client, "%s Mother Zombies currently alive : {darkred}%s{default}.", TAG_COLOR, aBuf);
 	}
 	else
-		CReplyToCommand(client, "[SM] Mother Zombies currently alive: {pink}none");
+		CReplyToCommand(client, "%s Mother Zombies currently alive : {darkred}none{default}.", TAG_COLOR);
 
 	return Plugin_Handled;
 }
@@ -206,7 +207,7 @@ public Action Command_Friends(int client, int args)
 
 	if(g_FriendsArray[client] == INVALID_HANDLE)
 	{
-		PrintToChat(client, "[SM] Could not read your friendslist, your profile must be set to public!");
+		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
 		return Plugin_Handled;
 	}
 
@@ -230,10 +231,10 @@ public Action Command_Friends(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		PrintToChat(client, "[SM] Friends currently online: {lightblue}%s", aBuf);
+		CPrintToChat(client, "%s Friends currently online : {lightblue}%s{default}.", TAG_COLOR, aBuf);
 	}
 	else
-		PrintToChat(client, "[SM] Friends currently online: {pink}none");
+		CPrintToChat(client, "%s Friends currently online : {lightblue}none{default}.", TAG_COLOR);
 
 	return Plugin_Handled;
 }
@@ -256,10 +257,10 @@ public Action Command_Steam(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "[SM] Steam clients online: {lightblue}%s", aBuf);
+		CReplyToCommand(client, "%s Steam clients online : {lightblue}%s{default}.", TAG_COLOR, aBuf);
 	}
 	else
-		CReplyToCommand(client, "[SM] Steam clients online: {pink}none");
+		CReplyToCommand(client, "%s Steam clients online : {lightblue}none{default}.", TAG_COLOR);
 
 	return Plugin_Handled;
 }
@@ -282,10 +283,10 @@ public Action Command_NoSteam(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "[SM] No-Steam clients online: {lightblue}%s", aBuf);
+		CReplyToCommand(client, "%s No-Steam clients online : {lightblue}%s{default}.", TAG_COLOR, aBuf);
 	}
 	else
-		CReplyToCommand(client, "[SM] No-Steam clients online: {pink}none");
+		CReplyToCommand(client, "%s No-Steam clients online : {lightblue}none{default}.", TAG_COLOR);
 
 	return Plugin_Handled;
 }
@@ -423,7 +424,7 @@ public bool Filter_Friends(const char[] sPattern, Handle hClients, int client)
 {
 	if(g_FriendsArray[client] == INVALID_HANDLE)
 	{
-		PrintToChat(client, "[SM] Could not read your friendslist, your profile must be set to public!");
+		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
 		return false;
 	}
 
@@ -445,7 +446,7 @@ public bool Filter_NotFriends(const char[] sPattern, Handle hClients, int client
 {
 	if(g_FriendsArray[client] == INVALID_HANDLE)
 	{
-		PrintToChat(client, "[SM] Could not read your friendslist, your profile must be set to public!");
+		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
 		return false;
 	}
 
