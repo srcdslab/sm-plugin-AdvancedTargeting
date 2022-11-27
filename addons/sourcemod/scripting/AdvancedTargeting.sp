@@ -4,11 +4,10 @@
 
 #include <sourcemod>
 #include <sdktools>
-#include <ripext>
 #include <cstrike>
-#include <AdvancedTargeting>
 #include <multicolors>
 #include <utilshelper>
+#include <ripext>
 #tryinclude <vip_core>
 #tryinclude <zombiereloaded>
 #tryinclude <PlayerManager>
