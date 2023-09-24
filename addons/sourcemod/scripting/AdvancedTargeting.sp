@@ -8,9 +8,12 @@
 #include <multicolors>
 #include <utilshelper>
 #include <ripext>
+
+#undef REQUIRE_PLUGIN
 #tryinclude <vip_core>
 #tryinclude <zombiereloaded>
 #tryinclude <PlayerManager>
+#define REQUIRE_PLUGIN
 
 #undef REQUIRE_EXTENSIONS
 #tryinclude <Voice>
