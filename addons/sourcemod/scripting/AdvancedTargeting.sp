@@ -8,9 +8,12 @@
 #include <multicolors>
 #include <utilshelper>
 #include <ripext>
+
+#undef REQUIRE_PLUGIN
 #tryinclude <vip_core>
 #tryinclude <zombiereloaded>
 #tryinclude <PlayerManager>
+#define REQUIRE_PLUGIN
 
 #undef REQUIRE_EXTENSIONS
 #tryinclude <Voice>
@@ -27,7 +30,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.4.0",
+	version = "1.4.1",
 	url = ""
 }
 
