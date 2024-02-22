@@ -25,17 +25,35 @@
 Handle g_FriendsArray[MAXPLAYERS + 1] = {INVALID_HANDLE, ...};
 bool g_bLateLoad = false;
 
+bool g_Plugin_ZR = false;
+bool g_Plugin_PM = false;
+bool g_Plugin_VIP = false;
+
 public Plugin myinfo =
 {
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.4.1",
+	version = "1.4.2",
 	url = ""
 }
 
-public void OnPluginStart()
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	CreateNative("IsClientFriend", Native_IsClientFriend);
+	CreateNative("ReadClientFriends", Native_ReadClientFriends);
+	RegPluginLibrary("AdvancedTargeting");
+
+	g_bLateLoad = late;
+	return APLRes_Success;
+}
+
+public void OnAllPluginsLoaded()
+{
+	g_Plugin_ZR = LibraryExists("zombiereloaded");
+	g_Plugin_PM = LibraryExists("PlayerManager");
+	g_Plugin_VIP = LibraryExists("vip_core");
+
 #if defined _Voice_included
 	AddMultiTargetFilter("@talking", Filter_Talking, "Talking", false);
 #endif
@@ -115,14 +133,24 @@ public void OnPluginEnd()
 #endif
 }
 
-public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+public void OnLibraryAdded(const char[] sName)
 {
-	CreateNative("IsClientFriend", Native_IsClientFriend);
-	CreateNative("ReadClientFriends", Native_ReadClientFriends);
-	RegPluginLibrary("AdvancedTargeting");
+	if (strcmp(sName, "zombiereloaded", false) == 0)
+		g_Plugin_ZR = true;
+	if (strcmp(sName, "PlayerManager", false) == 0)
+		g_Plugin_PM = true;
+	if (strcmp(sName, "vip_core", false) == 0)
+		g_Plugin_VIP = true;
+}
 
-	g_bLateLoad = late;
-	return APLRes_Success;
+public void OnLibraryRemoved(const char[] sName)
+{
+	if (strcmp(sName, "zombiereloaded", false) == 0)
+		g_Plugin_ZR = false;
+	if (strcmp(sName, "PlayerManager", false) == 0)
+		g_Plugin_PM = false;
+	if (strcmp(sName, "vip_core", false) == 0)
+		g_Plugin_VIP = false;
 }
 
 public Action Command_Admins(int client, int args)
@@ -178,6 +206,9 @@ public Action Command_VIPs(int client, int args)
 #if defined _zr_included
 public Action Command_MotherZombies(int client, int args)
 {
+	if (!g_Plugin_ZR || GetFeatureStatus(FeatureType_Native, "ZR_IsClientMotherZombie") != FeatureStatus_Available)
+		return Plugin_Handled;
+
 	char aBuf[1024];
 	char aBuf2[MAX_NAME_LENGTH];
 	for(int i = 1; i <= MaxClients; i++)
@@ -243,9 +274,11 @@ public Action Command_Friends(int client, int args)
 
 public Action Command_Steam(int client, int args)
 {
+	if (!g_Plugin_PM || GetFeatureStatus(FeatureType_Native, "PM_IsPlayerSteam") != FeatureStatus_Available)
+		return Plugin_Handled;
+
 	char aBuf[1024];
 	char aBuf2[MAX_NAME_LENGTH];
-
 	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i) && !IsFakeClient(i) && PM_IsPlayerSteam(i))
@@ -269,6 +302,9 @@ public Action Command_Steam(int client, int args)
 
 public Action Command_NoSteam(int client, int args)
 {
+	if (!g_Plugin_PM || GetFeatureStatus(FeatureType_Native, "PM_IsPlayerSteam") != FeatureStatus_Available)
+		return Plugin_Handled;
+
 	char aBuf[1024];
 	char aBuf2[MAX_NAME_LENGTH];
 
@@ -295,6 +331,9 @@ public Action Command_NoSteam(int client, int args)
 
 public bool Filter_Steam(const char[] sPattern, Handle hClients)
 {
+	if (!g_Plugin_PM || GetFeatureStatus(FeatureType_Native, "PM_IsPlayerSteam") != FeatureStatus_Available)
+		return false;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && PM_IsPlayerSteam(i))
@@ -307,6 +346,9 @@ public bool Filter_Steam(const char[] sPattern, Handle hClients)
 
 public bool Filter_NoSteam(const char[] sPattern, Handle hClients)
 {
+	if (!g_Plugin_PM || GetFeatureStatus(FeatureType_Native, "PM_IsPlayerSteam") != FeatureStatus_Available)
+		return false;
+
 	for (int i = 1; i <= MaxClients; i++)
 	{
 		if (IsClientInGame(i) && !IsFakeClient(i) && !PM_IsPlayerSteam(i))
@@ -320,6 +362,9 @@ public bool Filter_NoSteam(const char[] sPattern, Handle hClients)
 #if defined _Voice_included
 public bool Filter_Talking(const char[] sPattern, Handle hClients, int client)
 {
+	if (GetFeatureStatus(FeatureType_Native, "IsClientTalking") != FeatureStatus_Available)
+		return false;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && IsClientTalking(i))
@@ -361,6 +406,9 @@ public bool Filter_NotAdmin(const char[] sPattern, Handle hClients, int client)
 #if defined _zr_included
 public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int client)
 {
+	if (!g_Plugin_ZR || GetFeatureStatus(FeatureType_Native, "ZR_IsClientMotherZombie") != FeatureStatus_Available)
+		return false;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && ZR_IsClientMotherZombie(i))
@@ -376,6 +424,9 @@ public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int clie
 #if defined _zr_included
 public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int client)
 {
+	if (!g_Plugin_ZR || GetFeatureStatus(FeatureType_Native, "ZR_IsClientMotherZombie") != FeatureStatus_Available || GetFeatureStatus(FeatureType_Native, "ZR_IsClientZombie") != FeatureStatus_Available)
+		return false;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && !ZR_IsClientMotherZombie(i) && ZR_IsClientZombie(i))
@@ -390,10 +441,12 @@ public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int c
 
 public bool Filter_VIP(const char[] sPattern, Handle hClients, int client)
 {
+	bool bNative = GetFeatureStatus(FeatureType_Native, "VIP_IsClientVIP") == FeatureStatus_Available;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
 #if defined _vip_core_included
-		if(IsClientInGame(i) && !IsFakeClient(i) && VIP_IsClientVIP(i))
+		if(g_Plugin_VIP && bNative && IsClientInGame(i) && !IsFakeClient(i) && VIP_IsClientVIP(i))
 #else
 		if(IsClientInGame(i) && !IsFakeClient(i) && GetAdminFlag(GetUserAdmin(i), Admin_Custom1))
 #endif
@@ -407,10 +460,12 @@ public bool Filter_VIP(const char[] sPattern, Handle hClients, int client)
 
 public bool Filter_NotVIP(const char[] sPattern, Handle hClients, int client)
 {
+	bool bNative = GetFeatureStatus(FeatureType_Native, "VIP_IsClientVIP") == FeatureStatus_Available;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
 #if defined _vip_core_included
-		if(IsClientInGame(i) && !IsFakeClient(i) && !VIP_IsClientVIP(i))
+		if(g_Plugin_VIP && bNative && IsClientInGame(i) && !IsFakeClient(i) && !VIP_IsClientVIP(i))
 #else
 		if(IsClientInGame(i) && !IsFakeClient(i) && !GetAdminFlag(GetUserAdmin(i), Admin_Custom1))
 #endif
