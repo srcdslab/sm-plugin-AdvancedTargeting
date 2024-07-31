@@ -34,7 +34,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.4.2",
+	version = "1.4.3",
 	url = ""
 }
 
@@ -72,14 +72,11 @@ public void OnAllPluginsLoaded()
 #endif
 
 #if defined _PlayerManager_included
-	if (GetEngineVersion() != Engine_CSGO)
-	{
-		AddMultiTargetFilter("@steam", Filter_Steam, "Steam Players", false);
-		AddMultiTargetFilter("@nosteam", Filter_NoSteam, "No-Steam Players", false);
+	AddMultiTargetFilter("@steam", Filter_Steam, "Steam Players", false);
+	AddMultiTargetFilter("@nosteam", Filter_NoSteam, "No-Steam Players", false);
 
-		RegConsoleCmd("sm_steam", Command_Steam, "Currently online No-Steam players");
-		RegConsoleCmd("sm_nosteam", Command_NoSteam, "Currently online No-Steam players");
-	}
+	RegConsoleCmd("sm_steam", Command_Steam, "Currently online No-Steam players");
+	RegConsoleCmd("sm_nosteam", Command_NoSteam, "Currently online No-Steam players");
 #endif
 
 	RegConsoleCmd("sm_admins", Command_Admins, "Currently online admins.");
@@ -125,11 +122,8 @@ public void OnPluginEnd()
 #endif
 
 #if defined _PlayerManager_included
-	if (GetEngineVersion() != Engine_CSGO)
-	{
-		RemoveMultiTargetFilter("@steam", Filter_Steam);
-		RemoveMultiTargetFilter("@nosteam", Filter_NoSteam);
-	}
+	RemoveMultiTargetFilter("@steam", Filter_Steam);
+	RemoveMultiTargetFilter("@nosteam", Filter_NoSteam);
 #endif
 }
 
