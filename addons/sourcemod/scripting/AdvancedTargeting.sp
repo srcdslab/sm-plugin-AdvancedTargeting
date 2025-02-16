@@ -34,7 +34,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.4.3",
+	version = "1.4.4",
 	url = ""
 }
 
@@ -131,9 +131,9 @@ public void OnLibraryAdded(const char[] sName)
 {
 	if (strcmp(sName, "zombiereloaded", false) == 0)
 		g_Plugin_ZR = true;
-	if (strcmp(sName, "PlayerManager", false) == 0)
+	else if (strcmp(sName, "PlayerManager", false) == 0)
 		g_Plugin_PM = true;
-	if (strcmp(sName, "vip_core", false) == 0)
+	else if (strcmp(sName, "vip_core", false) == 0)
 		g_Plugin_VIP = true;
 }
 
@@ -141,9 +141,9 @@ public void OnLibraryRemoved(const char[] sName)
 {
 	if (strcmp(sName, "zombiereloaded", false) == 0)
 		g_Plugin_ZR = false;
-	if (strcmp(sName, "PlayerManager", false) == 0)
+	else if (strcmp(sName, "PlayerManager", false) == 0)
 		g_Plugin_PM = false;
-	if (strcmp(sName, "vip_core", false) == 0)
+	else if (strcmp(sName, "vip_core", false) == 0)
 		g_Plugin_VIP = false;
 }
 
