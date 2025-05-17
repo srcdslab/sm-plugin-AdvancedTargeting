@@ -34,7 +34,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.4.4",
+	version = "1.5.0",
 	url = ""
 }
 
@@ -515,78 +515,59 @@ public bool Filter_NotFriends(const char[] sPattern, Handle hClients, int client
 	return true;
 }
 
+stock bool GetRandomPlayer(Handle hClients, int team = -1)
+{
+	if(team == -1)
+		team = GetRandomInt(0, 1) ? CS_TEAM_CT : CS_TEAM_T;
+
+	int playerCount = 0;
+
+	for(int i = 1; i <= MaxClients; i++)
+	{
+		if(!IsClientInGame(i) || !IsPlayerAlive(i))
+			continue;
+
+		if(GetClientTeam(i) != team)
+			continue;
+
+		playerCount++;
+	}
+
+	if(!playerCount)
+		return false;
+
+	int[] validPlayers = new int[playerCount];
+	int currentIndex = 0;
+
+	for(int i = 1; i <= MaxClients; i++)
+	{
+		if(!IsClientInGame(i) || !IsPlayerAlive(i))
+			continue;
+
+		if(GetClientTeam(i) != team)
+			continue;
+
+		validPlayers[currentIndex] = i;
+		currentIndex++;
+	}
+
+	PushArrayCell(hClients, validPlayers[GetRandomInt(0, playerCount-1)]);
+	return true;
+}
+
 public bool Filter_Random(const char[] sPattern, Handle hClients, int client)
 {
-	int iRand = GetRandomInt(1, MaxClients);
-
-	if(IsClientInGame(iRand) && IsPlayerAlive(iRand))
-		PushArrayCell(hClients, iRand);
-	else
-		Filter_Random(sPattern, hClients, client);
-
-	return true;
+	return GetRandomPlayer(hClients);
 }
 
 public bool Filter_RandomCT(const char[] sPattern, Handle hClients, int client)
 {
-	int iCTCount = GetTeamClientCount(CS_TEAM_CT);
-
-	if(!iCTCount)
-		return false;
-
-	int[] iCTs = new int[iCTCount];
-
-	int iCurIndex;
-
-	for(int i = 1; i <= MaxClients; i++)
-	{
-		if(!IsClientInGame(i) || GetClientTeam(i) != CS_TEAM_CT)
-			continue;
-
-		if(!IsPlayerAlive(i))
-		{
-			iCTCount--;
-			continue;
-		}
-
-		iCTs[iCurIndex] = i;
-		iCurIndex++;
-	}
-
-	PushArrayCell(hClients, iCTs[GetRandomInt(0, iCTCount-1)]);
-
-	return true;
+	return GetRandomPlayer(hClients, CS_TEAM_CT);
 }
 
 public bool Filter_RandomT(const char[] sPattern, Handle hClients, int client)
 {
-	int iTCount = GetTeamClientCount(CS_TEAM_T);
-
-	if(!iTCount)
-		return false;
-
-	int[] iTs = new int[iTCount];
-
-	int iCurIndex;
-
-	for(int i = 1; i <= MaxClients; i++)
-	{
-		if(!IsClientInGame(i) || GetClientTeam(i) != CS_TEAM_T)
-			continue;
-
-		if(!IsPlayerAlive(i))
-		{
-			iTCount--;
-			continue;
-		}
-
-		iTs[iCurIndex] = i;
-		iCurIndex++;
-	}
-
-	PushArrayCell(hClients, iTs[GetRandomInt(0, iTCount-1)]);
-
-	return true;
+	return GetRandomPlayer(hClients, CS_TEAM_T);
 }
 
 public void OnClientAuthorized(int client, const char[] auth)
