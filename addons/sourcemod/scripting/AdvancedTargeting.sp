@@ -28,13 +28,17 @@ bool g_bLateLoad = false;
 bool g_Plugin_ZR = false;
 bool g_Plugin_PM = false;
 bool g_Plugin_VIP = false;
+bool g_bZombieSpawned = false;
+
+char g_sMotherZombies[1024];
+char g_sPreviousMotherZombies[1024];
 
 public Plugin myinfo =
 {
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.0",
+	version = "1.5.1",
 	url = ""
 }
 
@@ -86,6 +90,10 @@ public void OnAllPluginsLoaded()
 	RegConsoleCmd("sm_mzombies", Command_MotherZombies, "Currently online mother zombies.");
 #endif
 
+#if defined _zr_included
+	HookEvent("round_start", OnRoundStart, EventHookMode_Pre);
+#endif
+
 	if(g_bLateLoad)
 	{
 		char sSteam32ID[32];
@@ -125,6 +133,9 @@ public void OnPluginEnd()
 	RemoveMultiTargetFilter("@steam", Filter_Steam);
 	RemoveMultiTargetFilter("@nosteam", Filter_NoSteam);
 #endif
+
+	g_sPreviousMotherZombies = "\0";
+	g_sMotherZombies = "\0";
 }
 
 public void OnLibraryAdded(const char[] sName)
@@ -145,6 +156,13 @@ public void OnLibraryRemoved(const char[] sName)
 		g_Plugin_PM = false;
 	else if (strcmp(sName, "vip_core", false) == 0)
 		g_Plugin_VIP = false;
+}
+
+public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
+{
+	g_bZombieSpawned = false;
+	strcopy(g_sPreviousMotherZombies, sizeof(g_sPreviousMotherZombies), g_sMotherZombies);
+	g_sMotherZombies = "\0";
 }
 
 public Action Command_Admins(int client, int args)
@@ -203,25 +221,39 @@ public Action Command_MotherZombies(int client, int args)
 	if (!g_Plugin_ZR || GetFeatureStatus(FeatureType_Native, "ZR_IsClientMotherZombie") != FeatureStatus_Available)
 		return Plugin_Handled;
 
+	if (!g_bZombieSpawned && strlen(g_sPreviousMotherZombies) > 0)
+	{
+		CReplyToCommand(client, "%s Mother zombies have not spawned yet.", TAG_COLOR);
+		CReplyToCommand(client, "%s Previous mother zombies: %s", TAG_COLOR, g_sPreviousMotherZombies);
+		return Plugin_Handled;
+	}
+
 	char aBuf[1024];
 	char aBuf2[MAX_NAME_LENGTH];
+	int iZombiesCount = 0;
+
 	for(int i = 1; i <= MaxClients; i++)
 	{
-		if(IsClientInGame(i) && !IsFakeClient(i) && IsPlayerAlive(i) && ZR_IsClientMotherZombie(i))
+		if(IsClientInGame(i) && IsPlayerAlive(i) && ZR_IsClientMotherZombie(i))
 		{
 			GetClientName(i, aBuf2, sizeof(aBuf2));
-			StrCat(aBuf, sizeof(aBuf), aBuf2);
-			StrCat(aBuf, sizeof(aBuf), ", ");
+			Format(aBuf, sizeof(aBuf), "%s{darkred}%s{default}, ", aBuf, aBuf2);
+			iZombiesCount++;
 		}
 	}
 
-	if(strlen(aBuf))
-	{
-		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "%s Mother Zombies currently alive : {darkred}%s{default}.", TAG_COLOR, aBuf);
-	}
+	if (iZombiesCount > 0)
+		aBuf[strlen(aBuf) - 11] = 0;
+
+	g_sMotherZombies = aBuf;
+
+	if (iZombiesCount > 0)
+		CReplyToCommand(client, "%s Mother zombies currently alive: %s", TAG_COLOR, aBuf);
 	else
-		CReplyToCommand(client, "%s Mother Zombies currently alive : {darkred}none{default}.", TAG_COLOR);
+		CReplyToCommand(client, "%s Mother zombies currently alive: {darkred}none{default}.", TAG_COLOR);
+
+	if (strlen(g_sPreviousMotherZombies) > 0)
+		CReplyToCommand(client, "%s Previous mother zombies: %s", TAG_COLOR, g_sPreviousMotherZombies);
 
 	return Plugin_Handled;
 }
@@ -569,6 +601,16 @@ public bool Filter_RandomT(const char[] sPattern, Handle hClients, int client)
 {
 	return GetRandomPlayer(hClients, CS_TEAM_T);
 }
+
+#if defined _zr_included
+public Action ZR_OnClientInfect(int &client, int &attacker, bool &motherInfect, bool &respawnOverride, bool &respawn)
+{
+	if (motherInfect)
+		g_bZombieSpawned = true;
+
+	return Plugin_Continue;
+}
+#endif
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
