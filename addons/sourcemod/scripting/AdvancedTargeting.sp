@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.1",
+	version = "1.5.2",
 	url = ""
 }
 
@@ -603,12 +603,10 @@ public bool Filter_RandomT(const char[] sPattern, Handle hClients, int client)
 }
 
 #if defined _zr_included
-public Action ZR_OnClientInfect(int &client, int &attacker, bool &motherInfect, bool &respawnOverride, bool &respawn)
+public void ZR_OnClientInfected(int client, int attacker, bool motherInfect, bool respawnOverride, bool respawn)
 {
 	if (motherInfect)
 		g_bZombieSpawned = true;
-
-	return Plugin_Continue;
 }
 #endif
 
