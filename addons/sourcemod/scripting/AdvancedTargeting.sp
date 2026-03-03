@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.3",
+	version = "1.5.4",
 	url = ""
 }
 
@@ -644,8 +644,13 @@ void OnFriendsReceived(HTTPResponse response, any client)
 
 	// Indicate that the response contains a JSON object
 	JSONObject responseData = view_as<JSONObject>(response.Data);
+	if (responseData == null)
+		return;
 
 	JSONObject friendslist = view_as<JSONObject>(responseData.Get("friendslist"));
+
+	if (friendslist == null)
+		return;
 
 	APIWebResponse(friendslist, client);
 }
@@ -660,6 +665,11 @@ public void APIWebResponse(JSONObject friendslist, int client)
 	}
 
 	JSONArray friends = view_as<JSONArray>(friendslist.Get("friends"));
+	if (friends == null)
+	{
+		delete friendslist;
+		return;
+	}
 
 	if(g_FriendsArray[client] != INVALID_HANDLE)
 		CloseHandle(g_FriendsArray[client]);
@@ -670,6 +680,9 @@ public void APIWebResponse(JSONObject friendslist, int client)
 	for (int i = 0; i < friends.Length; i++)
 	{
 		JSONObject friend = view_as<JSONObject>(friends.Get(i));
+		if (friend == null)
+			continue;
+
 		friend.GetString("steamid", sCommunityID, sizeof(sCommunityID));
 		PushArrayCell(g_FriendsArray[client], Steam64toSteam3(sCommunityID));
 		delete friend;
