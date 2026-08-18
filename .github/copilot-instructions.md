@@ -15,9 +15,9 @@ This repository contains the **Advanced Targeting Extended** SourcePawn plugin f
 ## Technical Environment
 
 - **Language**: SourcePawn (.sp files)
-- **Platform**: SourceMod 1.11+ (configured for 1.11.0-git6934)
-- **Compiler**: SourcePawn compiler (spcomp) via SourceKnight
-- **Build System**: SourceKnight 0.2 (configured in `sourceknight.yaml`)
+- **Platform**: SourceMod 1.12+
+- **Compiler**: SourcePawn compiler (spcomp) via `rumblefrog/setup-sp`
+- **Build System**: Native GitHub Actions workflow (configured in `.github/workflows/ci.yml`)
 - **CI/CD**: GitHub Actions with automated building and releases
 
 ## Project Structure
@@ -29,14 +29,13 @@ This repository contains the **Advanced Targeting Extended** SourcePawn plugin f
 │   ├── AdvancedTargeting.sp      # Main plugin source
 │   └── include/
 │       └── AdvancedTargeting.inc # Native function definitions
-├── sourceknight.yaml            # Build configuration and dependencies
 └── .gitignore                   # Git ignore rules
 ```
 
 ### Important Files
 - **AdvancedTargeting.sp**: Main plugin implementation with targeting filters and commands
 - **AdvancedTargeting.inc**: Include file defining native functions for other plugins
-- **sourceknight.yaml**: Build configuration defining dependencies and build targets
+- **.github/workflows/ci.yml**: Build configuration defining dependencies and build targets
 
 ## Dependencies
 
@@ -57,21 +56,21 @@ The plugin depends on several SourceMod extensions and plugins:
 ## Build Process
 
 ### Local Development
-**Note**: SourceKnight is primarily designed for CI environments. For local development:
+For local development:
 1. Set up a SourceMod development environment with the SourcePawn compiler (spcomp)
-2. Install dependencies manually or use the CI build artifacts
+2. Install dependencies manually (clone each dependency repo and copy its `include/` files) or use the CI build artifacts
 3. Compile: `spcomp -i include_path AdvancedTargeting.sp`
 
 ### CI/CD Pipeline (Recommended)
 - **Trigger**: Push, PR, or workflow dispatch
-- **Build**: Automated via SourceKnight GitHub Action (`maxime1907/action-sourceknight@v1`)
-- **Dependencies**: Automatically downloaded and configured by SourceKnight
+- **Build**: Native GitHub Actions workflow using `rumblefrog/setup-sp` to install spcomp
+- **Dependencies**: Cloned and copied into place by shell steps in `.github/workflows/ci.yml`
 - **Output**: Built plugins available in GitHub Actions artifacts
 - **Release**: Automatic releases on tag push or main branch with `.tar.gz` packages
 
 ### Build Configuration
-The `sourceknight.yaml` file defines:
-- Project dependencies with specific versions
+The `.github/workflows/ci.yml` file defines:
+- Project dependencies (cloned from their git repos at build time)
 - Source and destination paths for includes
 - Build targets and output directories
 
@@ -218,16 +217,16 @@ spcomp -i addons/sourcemod/scripting/include addons/sourcemod/scripting/Advanced
 # (Recommended approach for validating builds)
 
 # View build configuration
-cat sourceknight.yaml
+cat .github/workflows/ci.yml
 
-# Check dependency versions
-grep -A 20 "dependencies:" sourceknight.yaml
+# Check dependency repos used by CI
+grep -A 20 "Install dependencies" -A 40 .github/workflows/ci.yml
 ```
 
 ## Troubleshooting
 
 ### Build Issues
-- **Missing dependencies**: Check `sourceknight.yaml` dependency definitions
+- **Missing dependencies**: Check the "Install dependencies" step in `.github/workflows/ci.yml`
 - **Include errors**: Verify optional includes use `#tryinclude`
 - **Version conflicts**: Ensure SourceMod version compatibility
 
