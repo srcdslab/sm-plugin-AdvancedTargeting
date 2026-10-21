@@ -22,7 +22,7 @@
 
 #pragma newdecls required
 
-Handle g_FriendsArray[MAXPLAYERS + 1] = {INVALID_HANDLE, ...};
+ArrayList g_FriendsArray[MAXPLAYERS + 1] = {null, ...};
 bool g_bLateLoad = false;
 
 bool g_Plugin_ZR = false;
@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.4",
+	version = "1.5.5",
 	url = ""
 }
 
@@ -264,7 +264,7 @@ public Action Command_Friends(int client, int args)
 	if(!client)
 		return Plugin_Handled;
 
-	if(g_FriendsArray[client] == INVALID_HANDLE)
+	if(g_FriendsArray[client] == null)
 	{
 		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
 		return Plugin_Handled;
@@ -278,7 +278,7 @@ public Action Command_Friends(int client, int args)
 		{
 			int Steam3ID = GetSteamAccountID(i);
 
-			if(FindValueInArray(g_FriendsArray[client], Steam3ID) != -1)
+			if(g_FriendsArray[client].FindValue(Steam3ID) != -1)
 			{
 				GetClientName(i, aBuf2, sizeof(aBuf2));
 				StrCat(aBuf, sizeof(aBuf), aBuf2);
@@ -355,7 +355,7 @@ public Action Command_NoSteam(int client, int args)
 	return Plugin_Handled;
 }
 
-public bool Filter_Steam(const char[] sPattern, Handle hClients)
+public bool Filter_Steam(const char[] sPattern, ArrayList hClients)
 {
 	if (!g_Plugin_PM || GetFeatureStatus(FeatureType_Native, "PM_IsPlayerSteam") != FeatureStatus_Available)
 		return false;
@@ -364,13 +364,13 @@ public bool Filter_Steam(const char[] sPattern, Handle hClients)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && PM_IsPlayerSteam(i))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 	return true;
 }
 
-public bool Filter_NoSteam(const char[] sPattern, Handle hClients)
+public bool Filter_NoSteam(const char[] sPattern, ArrayList hClients)
 {
 	if (!g_Plugin_PM || GetFeatureStatus(FeatureType_Native, "PM_IsPlayerSteam") != FeatureStatus_Available)
 		return false;
@@ -379,14 +379,14 @@ public bool Filter_NoSteam(const char[] sPattern, Handle hClients)
 	{
 		if (IsClientInGame(i) && !IsFakeClient(i) && !PM_IsPlayerSteam(i))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 	return true;
 }
 
 #if defined _Voice_included
-public bool Filter_Talking(const char[] sPattern, Handle hClients, int client)
+public bool Filter_Talking(const char[] sPattern, ArrayList hClients, int client)
 {
 	if (GetFeatureStatus(FeatureType_Native, "IsClientTalking") != FeatureStatus_Available)
 		return false;
@@ -395,7 +395,7 @@ public bool Filter_Talking(const char[] sPattern, Handle hClients, int client)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && IsClientTalking(i))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
@@ -403,26 +403,26 @@ public bool Filter_Talking(const char[] sPattern, Handle hClients, int client)
 }
 #endif
 
-public bool Filter_Admin(const char[] sPattern, Handle hClients, int client)
+public bool Filter_Admin(const char[] sPattern, ArrayList hClients, int client)
 {
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && GetAdminFlag(GetUserAdmin(i), Admin_Generic))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
 	return true;
 }
 
-public bool Filter_NotAdmin(const char[] sPattern, Handle hClients, int client)
+public bool Filter_NotAdmin(const char[] sPattern, ArrayList hClients, int client)
 {
 	for(int i = 1; i <= MaxClients; i++)
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && !GetAdminFlag(GetUserAdmin(i), Admin_Generic))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
@@ -430,7 +430,7 @@ public bool Filter_NotAdmin(const char[] sPattern, Handle hClients, int client)
 }
 
 #if defined _zr_included
-public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int client)
+public bool Filter_MotherZombie(const char[] sPattern, ArrayList hClients, int client)
 {
 	if (!g_Plugin_ZR || GetFeatureStatus(FeatureType_Native, "ZR_IsClientMotherZombie") != FeatureStatus_Available)
 		return false;
@@ -439,7 +439,7 @@ public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int clie
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && ZR_IsClientMotherZombie(i))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
@@ -448,7 +448,7 @@ public bool Filter_MotherZombie(const char[] sPattern, Handle hClients, int clie
 #endif
 
 #if defined _zr_included
-public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int client)
+public bool Filter_NotMotherZombie(const char[] sPattern, ArrayList hClients, int client)
 {
 	if (!g_Plugin_ZR || GetFeatureStatus(FeatureType_Native, "ZR_IsClientMotherZombie") != FeatureStatus_Available || GetFeatureStatus(FeatureType_Native, "ZR_IsClientZombie") != FeatureStatus_Available)
 		return false;
@@ -457,7 +457,7 @@ public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int c
 	{
 		if(IsClientInGame(i) && !IsFakeClient(i) && !ZR_IsClientMotherZombie(i) && ZR_IsClientZombie(i))
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
@@ -465,7 +465,7 @@ public bool Filter_NotMotherZombie(const char[] sPattern, Handle hClients, int c
 }
 #endif
 
-public bool Filter_VIP(const char[] sPattern, Handle hClients, int client)
+public bool Filter_VIP(const char[] sPattern, ArrayList hClients, int client)
 {
 	bool bNative = GetFeatureStatus(FeatureType_Native, "VIP_IsClientVIP") == FeatureStatus_Available;
 
@@ -477,14 +477,14 @@ public bool Filter_VIP(const char[] sPattern, Handle hClients, int client)
 		if(IsClientInGame(i) && !IsFakeClient(i) && GetAdminFlag(GetUserAdmin(i), Admin_Custom1))
 #endif
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
 	return true;
 }
 
-public bool Filter_NotVIP(const char[] sPattern, Handle hClients, int client)
+public bool Filter_NotVIP(const char[] sPattern, ArrayList hClients, int client)
 {
 	bool bNative = GetFeatureStatus(FeatureType_Native, "VIP_IsClientVIP") == FeatureStatus_Available;
 
@@ -496,16 +496,16 @@ public bool Filter_NotVIP(const char[] sPattern, Handle hClients, int client)
 		if(IsClientInGame(i) && !IsFakeClient(i) && !GetAdminFlag(GetUserAdmin(i), Admin_Custom1))
 #endif
 		{
-			PushArrayCell(hClients, i);
+			hClients.Push(i);
 		}
 	}
 
 	return true;
 }
 
-public bool Filter_Friends(const char[] sPattern, Handle hClients, int client)
+public bool Filter_Friends(const char[] sPattern, ArrayList hClients, int client)
 {
-	if(g_FriendsArray[client] == INVALID_HANDLE)
+	if(g_FriendsArray[client] == null)
 	{
 		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
 		return false;
@@ -517,17 +517,17 @@ public bool Filter_Friends(const char[] sPattern, Handle hClients, int client)
 		{
 			int Steam3ID = GetSteamAccountID(i);
 
-			if(FindValueInArray(g_FriendsArray[client], Steam3ID) != -1)
-				PushArrayCell(hClients, i);
+			if(g_FriendsArray[client].FindValue(Steam3ID) != -1)
+				hClients.Push(i);
 		}
 	}
 
 	return true;
 }
 
-public bool Filter_NotFriends(const char[] sPattern, Handle hClients, int client)
+public bool Filter_NotFriends(const char[] sPattern, ArrayList hClients, int client)
 {
-	if(g_FriendsArray[client] == INVALID_HANDLE)
+	if(g_FriendsArray[client] == null)
 	{
 		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
 		return false;
@@ -539,15 +539,15 @@ public bool Filter_NotFriends(const char[] sPattern, Handle hClients, int client
 		{
 			int Steam3ID = GetSteamAccountID(i);
 
-			if(FindValueInArray(g_FriendsArray[client], Steam3ID) == -1)
-				PushArrayCell(hClients, i);
+			if(g_FriendsArray[client].FindValue(Steam3ID) == -1)
+				hClients.Push(i);
 		}
 	}
 
 	return true;
 }
 
-stock bool GetRandomPlayer(Handle hClients, int team = -1)
+stock bool GetRandomPlayer(ArrayList hClients, int team = -1)
 {
 	if(team == -1)
 		team = GetRandomInt(0, 1) ? CS_TEAM_CT : CS_TEAM_T;
@@ -583,21 +583,21 @@ stock bool GetRandomPlayer(Handle hClients, int team = -1)
 		currentIndex++;
 	}
 
-	PushArrayCell(hClients, validPlayers[GetRandomInt(0, playerCount-1)]);
+	hClients.Push(validPlayers[GetRandomInt(0, playerCount-1)]);
 	return true;
 }
 
-public bool Filter_Random(const char[] sPattern, Handle hClients, int client)
+public bool Filter_Random(const char[] sPattern, ArrayList hClients, int client)
 {
 	return GetRandomPlayer(hClients);
 }
 
-public bool Filter_RandomCT(const char[] sPattern, Handle hClients, int client)
+public bool Filter_RandomCT(const char[] sPattern, ArrayList hClients, int client)
 {
 	return GetRandomPlayer(hClients, CS_TEAM_CT);
 }
 
-public bool Filter_RandomT(const char[] sPattern, Handle hClients, int client)
+public bool Filter_RandomT(const char[] sPattern, ArrayList hClients, int client)
 {
 	return GetRandomPlayer(hClients, CS_TEAM_T);
 }
@@ -631,10 +631,10 @@ public void OnClientAuthorized(int client, const char[] auth)
 
 public void OnClientDisconnect(int client)
 {
-	if(g_FriendsArray[client] != INVALID_HANDLE)
-		CloseHandle(g_FriendsArray[client]);
+	if(g_FriendsArray[client] != null)
+		delete g_FriendsArray[client];
 
-	g_FriendsArray[client] = INVALID_HANDLE;
+	g_FriendsArray[client] = null;
 }
 
 void OnFriendsReceived(HTTPResponse response, any client)
@@ -671,10 +671,10 @@ public void APIWebResponse(JSONObject friendslist, int client)
 		return;
 	}
 
-	if(g_FriendsArray[client] != INVALID_HANDLE)
-		CloseHandle(g_FriendsArray[client]);
+	if(g_FriendsArray[client] != null)
+		delete g_FriendsArray[client];
 
-	g_FriendsArray[client] = CreateArray();
+	g_FriendsArray[client] = new ArrayList();
 
 	char sCommunityID[32];
 	for (int i = 0; i < friends.Length; i++)
@@ -684,7 +684,7 @@ public void APIWebResponse(JSONObject friendslist, int client)
 			continue;
 
 		friend.GetString("steamid", sCommunityID, sizeof(sCommunityID));
-		PushArrayCell(g_FriendsArray[client], Steam64toSteam3(sCommunityID));
+		g_FriendsArray[client].Push(Steam64toSteam3(sCommunityID));
 		delete friend;
 	}
 
@@ -715,14 +715,14 @@ public int Native_IsClientFriend(Handle plugin, int numParams)
 		return -1;
 	}
 
-	if(g_FriendsArray[client] == INVALID_HANDLE)
+	if(g_FriendsArray[client] == null)
 		return -1;
 
 	if(IsClientAuthorized(friend))
 	{
 		int Steam3ID = GetSteamAccountID(friend);
 
-		if(FindValueInArray(g_FriendsArray[client], Steam3ID) != -1)
+		if(g_FriendsArray[client].FindValue(Steam3ID) != -1)
 			return 1;
 	}
 
@@ -739,7 +739,7 @@ public int Native_ReadClientFriends(Handle plugin, int numParams)
 		return -1;
 	}
 
-	if(g_FriendsArray[client] != INVALID_HANDLE)
+	if(g_FriendsArray[client] != null)
 		return 1;
 
 	return 0;
