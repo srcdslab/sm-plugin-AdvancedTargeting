@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.7",
+	version = "1.5.8",
 	url = ""
 }
 
@@ -629,7 +629,7 @@ public void OnClientAuthorized(int client, const char[] auth)
 	GetSteamAPIKey(sSteamAPIKey, sizeof(sSteamAPIKey));
 
 	static char sRequest[256];
-	FormatEx(sRequest, sizeof(sRequest), "http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=%s&steamid=%s&relationship=friend&format=json", sSteamAPIKey, sSteam64ID);
+	FormatEx(sRequest, sizeof(sRequest), "https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=%s&steamid=%s&relationship=friend&format=json", sSteamAPIKey, sSteam64ID);
 
 	HTTPRequest request = new HTTPRequest(sRequest);
 
