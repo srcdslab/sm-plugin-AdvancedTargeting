@@ -1,0 +1,174 @@
+"Phrases"
+{
+	"Admins Online"
+	{
+		"#format"	"{1:s}"
+		"en"		"Admins currently online: {green}{1}{default}."
+		"fr"		"Admins actuellement en ligne : {green}{1}{default}."
+		"ru"		"Админы в сети: {green}{1}{default}."
+		"es"		"Admins conectados actualmente: {green}{1}{default}."
+		"de"		"Admins online: {green}{1}{default}."
+		"pt"		"Admins online no momento: {green}{1}{default}."
+		"chi"		"当前在线的管理员：{green}{1}{default}。"
+	}
+
+	"Admins Online None"
+	{
+		"en"		"Admins currently online: {green}none{default}."
+		"fr"		"Admins actuellement en ligne : {green}aucun{default}."
+		"ru"		"Админы в сети: {green}нет{default}."
+		"es"		"Admins conectados actualmente: {green}ninguno{default}."
+		"de"		"Admins online: {green}keine{default}."
+		"pt"		"Admins online no momento: {green}nenhum{default}."
+		"chi"		"当前在线的管理员：{green}无{default}。"
+	}
+
+	"VIPs Online"
+	{
+		"#format"	"{1:s}"
+		"en"		"VIPs currently online: {orchid}{1}{default}."
+		"fr"		"VIP actuellement en ligne : {orchid}{1}{default}."
+		"ru"		"VIP в сети: {orchid}{1}{default}."
+		"es"		"VIPs conectados actualmente: {orchid}{1}{default}."
+		"de"		"VIPs online: {orchid}{1}{default}."
+		"pt"		"VIPs online no momento: {orchid}{1}{default}."
+		"chi"		"当前在线的 VIP：{orchid}{1}{default}。"
+	}
+
+	"VIPs Online None"
+	{
+		"en"		"VIPs currently online: {orchid}none{default}."
+		"fr"		"VIP actuellement en ligne : {orchid}aucun{default}."
+		"ru"		"VIP в сети: {orchid}нет{default}."
+		"es"		"VIPs conectados actualmente: {orchid}ninguno{default}."
+		"de"		"VIPs online: {orchid}keine{default}."
+		"pt"		"VIPs online no momento: {orchid}nenhum{default}."
+		"chi"		"当前在线的 VIP：{orchid}无{default}。"
+	}
+
+	"Mother Zombies Not Spawned"
+	{
+		"en"		"Mother zombies have not spawned yet."
+		"fr"		"Les zombies mères ne sont pas encore apparus."
+		"ru"		"Первые зомби ещё не появились."
+		"es"		"Los zombies madre aún no han aparecido."
+		"de"		"Die Mutterzombies sind noch nicht erschienen."
+		"pt"		"Os zumbis mãe ainda não apareceram."
+		"chi"		"母体僵尸尚未出现。"
+	}
+
+	"Previous Mother Zombies"
+	{
+		"#format"	"{1:s}"
+		"en"		"Previous mother zombies: {1}"
+		"fr"		"Zombies mères précédents : {1}"
+		"ru"		"Предыдущие первые зомби: {1}"
+		"es"		"Zombies madre anteriores: {1}"
+		"de"		"Vorherige Mutterzombies: {1}"
+		"pt"		"Zumbis mãe anteriores: {1}"
+		"chi"		"上一回合的母体僵尸：{1}"
+	}
+
+	"Mother Zombies Alive"
+	{
+		"#format"	"{1:s}"
+		"en"		"Mother zombies currently alive: {1}"
+		"fr"		"Zombies mères actuellement en vie : {1}"
+		"ru"		"Первые зомби, которые сейчас живы: {1}"
+		"es"		"Zombies madre vivos actualmente: {1}"
+		"de"		"Derzeit lebende Mutterzombies: {1}"
+		"pt"		"Zumbis mãe vivos no momento: {1}"
+		"chi"		"当前存活的母体僵尸：{1}"
+	}
+
+	"Mother Zombies Alive None"
+	{
+		"en"		"Mother zombies currently alive: {darkred}none{default}."
+		"fr"		"Zombies mères actuellement en vie : {darkred}aucun{default}."
+		"ru"		"Первые зомби, которые сейчас живы: {darkred}нет{default}."
+		"es"		"Zombies madre vivos actualmente: {darkred}ninguno{default}."
+		"de"		"Derzeit lebende Mutterzombies: {darkred}keine{default}."
+		"pt"		"Zumbis mãe vivos no momento: {darkred}nenhum{default}."
+		"chi"		"当前存活的母体僵尸：{darkred}无{default}。"
+	}
+
+	"Friends List Unreadable"
+	{
+		"en"		"Could not read your friends list, your profile must be set to public!"
+		"fr"		"Impossible de lire votre liste d'amis, votre profil doit être public !"
+		"ru"		"Не удалось прочитать ваш список друзей, ваш профиль должен быть публичным!"
+		"es"		"No se pudo leer tu lista de amigos, ¡tu perfil debe ser público!"
+		"de"		"Deine Freundesliste konnte nicht gelesen werden, dein Profil muss öffentlich sein!"
+		"pt"		"Não foi possível ler sua lista de amigos, seu perfil precisa ser público!"
+		"chi"		"无法读取你的好友列表，你的个人资料必须设为公开！"
+	}
+
+	"Friends Online"
+	{
+		"#format"	"{1:s}"
+		"en"		"Friends currently online: {lightblue}{1}{default}."
+		"fr"		"Amis actuellement en ligne : {lightblue}{1}{default}."
+		"ru"		"Друзья в сети: {lightblue}{1}{default}."
+		"es"		"Amigos conectados actualmente: {lightblue}{1}{default}."
+		"de"		"Freunde online: {lightblue}{1}{default}."
+		"pt"		"Amigos online no momento: {lightblue}{1}{default}."
+		"chi"		"当前在线的好友：{lightblue}{1}{default}。"
+	}
+
+	"Friends Online None"
+	{
+		"en"		"Friends currently online: {lightblue}none{default}."
+		"fr"		"Amis actuellement en ligne : {lightblue}aucun{default}."
+		"ru"		"Друзья в сети: {lightblue}нет{default}."
+		"es"		"Amigos conectados actualmente: {lightblue}ninguno{default}."
+		"de"		"Freunde online: {lightblue}keine{default}."
+		"pt"		"Amigos online no momento: {lightblue}nenhum{default}."
+		"chi"		"当前在线的好友：{lightblue}无{default}。"
+	}
+
+	"Steam Clients Online"
+	{
+		"#format"	"{1:s}"
+		"en"		"Steam clients online: {lightblue}{1}{default}."
+		"fr"		"Clients Steam en ligne : {lightblue}{1}{default}."
+		"ru"		"Игроки со Steam в сети: {lightblue}{1}{default}."
+		"es"		"Clientes Steam conectados: {lightblue}{1}{default}."
+		"de"		"Steam-Clients online: {lightblue}{1}{default}."
+		"pt"		"Clientes Steam online: {lightblue}{1}{default}."
+		"chi"		"在线的 Steam 客户端：{lightblue}{1}{default}。"
+	}
+
+	"Steam Clients Online None"
+	{
+		"en"		"Steam clients online: {lightblue}none{default}."
+		"fr"		"Clients Steam en ligne : {lightblue}aucun{default}."
+		"ru"		"Игроки со Steam в сети: {lightblue}нет{default}."
+		"es"		"Clientes Steam conectados: {lightblue}ninguno{default}."
+		"de"		"Steam-Clients online: {lightblue}keine{default}."
+		"pt"		"Clientes Steam online: {lightblue}nenhum{default}."
+		"chi"		"在线的 Steam 客户端：{lightblue}无{default}。"
+	}
+
+	"NoSteam Clients Online"
+	{
+		"#format"	"{1:s}"
+		"en"		"No-Steam clients online: {lightblue}{1}{default}."
+		"fr"		"Clients No-Steam en ligne : {lightblue}{1}{default}."
+		"ru"		"Игроки без Steam в сети: {lightblue}{1}{default}."
+		"es"		"Clientes No-Steam conectados: {lightblue}{1}{default}."
+		"de"		"No-Steam-Clients online: {lightblue}{1}{default}."
+		"pt"		"Clientes No-Steam online: {lightblue}{1}{default}."
+		"chi"		"在线的非 Steam 客户端：{lightblue}{1}{default}。"
+	}
+
+	"NoSteam Clients Online None"
+	{
+		"en"		"No-Steam clients online: {lightblue}none{default}."
+		"fr"		"Clients No-Steam en ligne : {lightblue}aucun{default}."
+		"ru"		"Игроки без Steam в сети: {lightblue}нет{default}."
+		"es"		"Clientes No-Steam conectados: {lightblue}ninguno{default}."
+		"de"		"No-Steam-Clients online: {lightblue}keine{default}."
+		"pt"		"Clientes No-Steam online: {lightblue}nenhum{default}."
+		"chi"		"在线的非 Steam 客户端：{lightblue}无{default}。"
+	}
+}
