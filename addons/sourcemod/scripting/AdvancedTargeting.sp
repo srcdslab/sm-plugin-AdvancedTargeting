@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.6",
+	version = "1.5.7",
 	url = ""
 }
 
@@ -512,7 +512,8 @@ public bool Filter_Friends(const char[] sPattern, ArrayList hClients, int client
 {
 	if(g_FriendsArray[client] == null)
 	{
-		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
+		if(client > 0)
+			CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
 		return false;
 	}
 
@@ -534,7 +535,8 @@ public bool Filter_NotFriends(const char[] sPattern, ArrayList hClients, int cli
 {
 	if(g_FriendsArray[client] == null)
 	{
-		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
+		if(client > 0)
+			CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
 		return false;
 	}
 
@@ -631,7 +633,7 @@ public void OnClientAuthorized(int client, const char[] auth)
 
 	HTTPRequest request = new HTTPRequest(sRequest);
 
-	request.Get(OnFriendsReceived, client);
+	request.Get(OnFriendsReceived, GetClientUserId(client));
 }
 
 public void OnClientDisconnect(int client)
@@ -642,8 +644,12 @@ public void OnClientDisconnect(int client)
 	g_FriendsArray[client] = null;
 }
 
-void OnFriendsReceived(HTTPResponse response, any client)
+void OnFriendsReceived(HTTPResponse response, any userid)
 {
+	int client = GetClientOfUserId(userid);
+	if (!client)
+		return;
+
 	if (response.Status != HTTPStatus_OK)
 		return;
 
