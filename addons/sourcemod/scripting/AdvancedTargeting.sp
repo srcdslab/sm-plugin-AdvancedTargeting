@@ -38,7 +38,7 @@ public Plugin myinfo =
 	name = "Advanced Targeting Extended",
 	author = "BotoX, Obus, inGame, maxime1907, .Rushaway",
 	description = "Adds extra targeting methods",
-	version = "1.5.5",
+	version = "1.5.6",
 	url = ""
 }
 
@@ -50,6 +50,11 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 	g_bLateLoad = late;
 	return APLRes_Success;
+}
+
+public void OnPluginStart()
+{
+	LoadTranslations("AdvancedTargeting.phrases");
 }
 
 public void OnAllPluginsLoaded()
@@ -182,10 +187,10 @@ public Action Command_Admins(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "%s Admins currently online : {green}%s{default}.", TAG_COLOR, aBuf);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Admins Online", aBuf);
 	}
 	else
-		CReplyToCommand(client, "%s Admins currently online : {green}none{default}.", TAG_COLOR);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Admins Online None");
 
 	return Plugin_Handled;
 }
@@ -207,10 +212,10 @@ public Action Command_VIPs(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "%s VIPs currently online : {orchid}%s{default}.", TAG_COLOR, aBuf);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "VIPs Online", aBuf);
 	}
 	else
-		CReplyToCommand(client, "%s VIPs currently online : {orchid}none{default}.", TAG_COLOR);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "VIPs Online None");
 
 	return Plugin_Handled;
 }
@@ -223,8 +228,8 @@ public Action Command_MotherZombies(int client, int args)
 
 	if (!g_bZombieSpawned && strlen(g_sPreviousMotherZombies) > 0)
 	{
-		CReplyToCommand(client, "%s Mother zombies have not spawned yet.", TAG_COLOR);
-		CReplyToCommand(client, "%s Previous mother zombies: %s", TAG_COLOR, g_sPreviousMotherZombies);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Mother Zombies Not Spawned");
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Previous Mother Zombies", g_sPreviousMotherZombies);
 		return Plugin_Handled;
 	}
 
@@ -248,12 +253,12 @@ public Action Command_MotherZombies(int client, int args)
 	g_sMotherZombies = aBuf;
 
 	if (iZombiesCount > 0)
-		CReplyToCommand(client, "%s Mother zombies currently alive: %s", TAG_COLOR, aBuf);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Mother Zombies Alive", aBuf);
 	else
-		CReplyToCommand(client, "%s Mother zombies currently alive: {darkred}none{default}.", TAG_COLOR);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Mother Zombies Alive None");
 
 	if (strlen(g_sPreviousMotherZombies) > 0)
-		CReplyToCommand(client, "%s Previous mother zombies: %s", TAG_COLOR, g_sPreviousMotherZombies);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Previous Mother Zombies", g_sPreviousMotherZombies);
 
 	return Plugin_Handled;
 }
@@ -266,7 +271,7 @@ public Action Command_Friends(int client, int args)
 
 	if(g_FriendsArray[client] == null)
 	{
-		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
+		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
 		return Plugin_Handled;
 	}
 
@@ -290,10 +295,10 @@ public Action Command_Friends(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CPrintToChat(client, "%s Friends currently online : {lightblue}%s{default}.", TAG_COLOR, aBuf);
+		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends Online", aBuf);
 	}
 	else
-		CPrintToChat(client, "%s Friends currently online : {lightblue}none{default}.", TAG_COLOR);
+		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends Online None");
 
 	return Plugin_Handled;
 }
@@ -318,10 +323,10 @@ public Action Command_Steam(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "%s Steam clients online : {lightblue}%s{default}.", TAG_COLOR, aBuf);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Steam Clients Online", aBuf);
 	}
 	else
-		CReplyToCommand(client, "%s Steam clients online : {lightblue}none{default}.", TAG_COLOR);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "Steam Clients Online None");
 
 	return Plugin_Handled;
 }
@@ -347,10 +352,10 @@ public Action Command_NoSteam(int client, int args)
 	if(strlen(aBuf))
 	{
 		aBuf[strlen(aBuf) - 2] = 0;
-		CReplyToCommand(client, "%s No-Steam clients online : {lightblue}%s{default}.", TAG_COLOR, aBuf);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "NoSteam Clients Online", aBuf);
 	}
 	else
-		CReplyToCommand(client, "%s No-Steam clients online : {lightblue}none{default}.", TAG_COLOR);
+		CReplyToCommand(client, "%s %t", TAG_COLOR, "NoSteam Clients Online None");
 
 	return Plugin_Handled;
 }
@@ -507,7 +512,7 @@ public bool Filter_Friends(const char[] sPattern, ArrayList hClients, int client
 {
 	if(g_FriendsArray[client] == null)
 	{
-		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
+		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
 		return false;
 	}
 
@@ -529,7 +534,7 @@ public bool Filter_NotFriends(const char[] sPattern, ArrayList hClients, int cli
 {
 	if(g_FriendsArray[client] == null)
 	{
-		CPrintToChat(client, "%s Could not read your friendslist, your profile must be set to public!", TAG_COLOR);
+		CPrintToChat(client, "%s %t", TAG_COLOR, "Friends List Unreadable");
 		return false;
 	}
 
