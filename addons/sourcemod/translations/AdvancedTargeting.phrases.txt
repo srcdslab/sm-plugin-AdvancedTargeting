@@ -10,6 +10,12 @@
 		"de"		"Admins online: {green}{1}{default}."
 		"pt"		"Admins online no momento: {green}{1}{default}."
 		"chi"		"当前在线的管理员：{green}{1}{default}。"
+		"pl"		"Administratorzy online: {green}{1}{default}."
+		"tr"		"Çevrimiçi yöneticiler: {green}{1}{default}."
+		"it"		"Admin attualmente online: {green}{1}{default}."
+		"ua"		"Адміни в мережі: {green}{1}{default}."
+		"zho"		"目前在線的管理員：{green}{1}{default}。"
+		"cze"		"Admini právě online: {green}{1}{default}."
 	}
 
 	"Admins Online None"
@@ -21,6 +27,12 @@
 		"de"		"Admins online: {green}keine{default}."
 		"pt"		"Admins online no momento: {green}nenhum{default}."
 		"chi"		"当前在线的管理员：{green}无{default}。"
+		"pl"		"Administratorzy online: {green}brak{default}."
+		"tr"		"Çevrimiçi yöneticiler: {green}yok{default}."
+		"it"		"Admin attualmente online: {green}nessuno{default}."
+		"ua"		"Адміни в мережі: {green}немає{default}."
+		"zho"		"目前在線的管理員：{green}無{default}。"
+		"cze"		"Admini právě online: {green}nikdo{default}."
 	}
 
 	"VIPs Online"
@@ -33,6 +45,12 @@
 		"de"		"VIPs online: {orchid}{1}{default}."
 		"pt"		"VIPs online no momento: {orchid}{1}{default}."
 		"chi"		"当前在线的 VIP：{orchid}{1}{default}。"
+		"pl"		"VIP-y online: {orchid}{1}{default}."
+		"tr"		"Çevrimiçi VIP'ler: {orchid}{1}{default}."
+		"it"		"VIP attualmente online: {orchid}{1}{default}."
+		"ua"		"VIP у мережі: {orchid}{1}{default}."
+		"zho"		"目前在線的 VIP：{orchid}{1}{default}。"
+		"cze"		"VIP právě online: {orchid}{1}{default}."
 	}
 
 	"VIPs Online None"
@@ -44,6 +62,12 @@
 		"de"		"VIPs online: {orchid}keine{default}."
 		"pt"		"VIPs online no momento: {orchid}nenhum{default}."
 		"chi"		"当前在线的 VIP：{orchid}无{default}。"
+		"pl"		"VIP-y online: {orchid}brak{default}."
+		"tr"		"Çevrimiçi VIP'ler: {orchid}yok{default}."
+		"it"		"VIP attualmente online: {orchid}nessuno{default}."
+		"ua"		"VIP у мережі: {orchid}немає{default}."
+		"zho"		"目前在線的 VIP：{orchid}無{default}。"
+		"cze"		"VIP právě online: {orchid}nikdo{default}."
 	}
 
 	"Mother Zombies Not Spawned"
@@ -55,6 +79,12 @@
 		"de"		"Die Mutterzombies sind noch nicht erschienen."
 		"pt"		"Os zumbis mãe ainda não apareceram."
 		"chi"		"母体僵尸尚未出现。"
+		"pl"		"Matki zombie jeszcze się nie pojawiły."
+		"tr"		"Anne zombiler henüz doğmadı."
+		"it"		"Gli zombie madre non sono ancora apparsi."
+		"ua"		"Перші зомбі ще не з'явилися."
+		"zho"		"母體殭屍尚未出現。"
+		"cze"		"Matky zombie se ještě neobjevily."
 	}
 
 	"Previous Mother Zombies"
@@ -67,6 +97,12 @@
 		"de"		"Vorherige Mutterzombies: {1}"
 		"pt"		"Zumbis mãe anteriores: {1}"
 		"chi"		"上一回合的母体僵尸：{1}"
+		"pl"		"Poprzednie matki zombie: {1}"
+		"tr"		"Önceki anne zombiler: {1}"
+		"it"		"Zombie madre precedenti: {1}"
+		"ua"		"Попередні перші зомбі: {1}"
+		"zho"		"上一回合的母體殭屍：{1}"
+		"cze"		"Předchozí matky zombie: {1}"
 	}
 
 	"Mother Zombies Alive"
@@ -79,6 +115,12 @@
 		"de"		"Derzeit lebende Mutterzombies: {1}"
 		"pt"		"Zumbis mãe vivos no momento: {1}"
 		"chi"		"当前存活的母体僵尸：{1}"
+		"pl"		"Aktualnie żywe matki zombie: {1}"
+		"tr"		"Şu an hayatta olan anne zombiler: {1}"
+		"it"		"Zombie madre attualmente vivi: {1}"
+		"ua"		"Перші зомбі, які зараз живі: {1}"
+		"zho"		"目前存活的母體殭屍：{1}"
+		"cze"		"Aktuálně žijící matky zombie: {1}"
 	}
 
 	"Mother Zombies Alive None"
@@ -90,6 +132,12 @@
 		"de"		"Derzeit lebende Mutterzombies: {darkred}keine{default}."
 		"pt"		"Zumbis mãe vivos no momento: {darkred}nenhum{default}."
 		"chi"		"当前存活的母体僵尸：{darkred}无{default}。"
+		"pl"		"Aktualnie żywe matki zombie: {darkred}brak{default}."
+		"tr"		"Şu an hayatta olan anne zombiler: {darkred}yok{default}."
+		"it"		"Zombie madre attualmente vivi: {darkred}nessuno{default}."
+		"ua"		"Перші зомбі, які зараз живі: {darkred}немає{default}."
+		"zho"		"目前存活的母體殭屍：{darkred}無{default}。"
+		"cze"		"Aktuálně žijící matky zombie: {darkred}žádné{default}."
 	}
 
 	"Friends List Unreadable"
@@ -101,6 +149,12 @@
 		"de"		"Deine Freundesliste konnte nicht gelesen werden, dein Profil muss öffentlich sein!"
 		"pt"		"Não foi possível ler sua lista de amigos, seu perfil precisa ser público!"
 		"chi"		"无法读取你的好友列表，你的个人资料必须设为公开！"
+		"pl"		"Nie udało się odczytać listy znajomych, twój profil musi być publiczny!"
+		"tr"		"Arkadaş listen okunamadı, profilin herkese açık olmalı!"
+		"it"		"Impossibile leggere la tua lista amici, il tuo profilo deve essere pubblico!"
+		"ua"		"Не вдалося прочитати ваш список друзів, ваш профіль має бути публічним!"
+		"zho"		"無法讀取你的好友列表，你的個人資料必須設為公開！"
+		"cze"		"Nepodařilo se načíst tvůj seznam přátel, tvůj profil musí být veřejný!"
 	}
 
 	"Friends Online"
@@ -113,6 +167,12 @@
 		"de"		"Freunde online: {lightblue}{1}{default}."
 		"pt"		"Amigos online no momento: {lightblue}{1}{default}."
 		"chi"		"当前在线的好友：{lightblue}{1}{default}。"
+		"pl"		"Znajomi online: {lightblue}{1}{default}."
+		"tr"		"Çevrimiçi arkadaşlar: {lightblue}{1}{default}."
+		"it"		"Amici attualmente online: {lightblue}{1}{default}."
+		"ua"		"Друзі в мережі: {lightblue}{1}{default}."
+		"zho"		"目前在線的好友：{lightblue}{1}{default}。"
+		"cze"		"Přátelé právě online: {lightblue}{1}{default}."
 	}
 
 	"Friends Online None"
@@ -124,6 +184,12 @@
 		"de"		"Freunde online: {lightblue}keine{default}."
 		"pt"		"Amigos online no momento: {lightblue}nenhum{default}."
 		"chi"		"当前在线的好友：{lightblue}无{default}。"
+		"pl"		"Znajomi online: {lightblue}brak{default}."
+		"tr"		"Çevrimiçi arkadaşlar: {lightblue}yok{default}."
+		"it"		"Amici attualmente online: {lightblue}nessuno{default}."
+		"ua"		"Друзі в мережі: {lightblue}немає{default}."
+		"zho"		"目前在線的好友：{lightblue}無{default}。"
+		"cze"		"Přátelé právě online: {lightblue}nikdo{default}."
 	}
 
 	"Steam Clients Online"
@@ -136,6 +202,12 @@
 		"de"		"Steam-Clients online: {lightblue}{1}{default}."
 		"pt"		"Clientes Steam online: {lightblue}{1}{default}."
 		"chi"		"在线的 Steam 客户端：{lightblue}{1}{default}。"
+		"pl"		"Klienci Steam online: {lightblue}{1}{default}."
+		"tr"		"Çevrimiçi Steam istemcileri: {lightblue}{1}{default}."
+		"it"		"Client Steam online: {lightblue}{1}{default}."
+		"ua"		"Гравці зі Steam у мережі: {lightblue}{1}{default}."
+		"zho"		"在線的 Steam 用戶端：{lightblue}{1}{default}。"
+		"cze"		"Steam klienti online: {lightblue}{1}{default}."
 	}
 
 	"Steam Clients Online None"
@@ -147,6 +219,12 @@
 		"de"		"Steam-Clients online: {lightblue}keine{default}."
 		"pt"		"Clientes Steam online: {lightblue}nenhum{default}."
 		"chi"		"在线的 Steam 客户端：{lightblue}无{default}。"
+		"pl"		"Klienci Steam online: {lightblue}brak{default}."
+		"tr"		"Çevrimiçi Steam istemcileri: {lightblue}yok{default}."
+		"it"		"Client Steam online: {lightblue}nessuno{default}."
+		"ua"		"Гравці зі Steam у мережі: {lightblue}немає{default}."
+		"zho"		"在線的 Steam 用戶端：{lightblue}無{default}。"
+		"cze"		"Steam klienti online: {lightblue}nikdo{default}."
 	}
 
 	"NoSteam Clients Online"
@@ -159,6 +237,12 @@
 		"de"		"No-Steam-Clients online: {lightblue}{1}{default}."
 		"pt"		"Clientes No-Steam online: {lightblue}{1}{default}."
 		"chi"		"在线的非 Steam 客户端：{lightblue}{1}{default}。"
+		"pl"		"Klienci No-Steam online: {lightblue}{1}{default}."
+		"tr"		"Çevrimiçi No-Steam istemcileri: {lightblue}{1}{default}."
+		"it"		"Client No-Steam online: {lightblue}{1}{default}."
+		"ua"		"Гравці без Steam у мережі: {lightblue}{1}{default}."
+		"zho"		"在線的非 Steam 用戶端：{lightblue}{1}{default}。"
+		"cze"		"No-Steam klienti online: {lightblue}{1}{default}."
 	}
 
 	"NoSteam Clients Online None"
@@ -170,5 +254,11 @@
 		"de"		"No-Steam-Clients online: {lightblue}keine{default}."
 		"pt"		"Clientes No-Steam online: {lightblue}nenhum{default}."
 		"chi"		"在线的非 Steam 客户端：{lightblue}无{default}。"
+		"pl"		"Klienci No-Steam online: {lightblue}brak{default}."
+		"tr"		"Çevrimiçi No-Steam istemcileri: {lightblue}yok{default}."
+		"it"		"Client No-Steam online: {lightblue}nessuno{default}."
+		"ua"		"Гравці без Steam у мережі: {lightblue}немає{default}."
+		"zho"		"在線的非 Steam 用戶端：{lightblue}無{default}。"
+		"cze"		"No-Steam klienti online: {lightblue}nikdo{default}."
 	}
 }
